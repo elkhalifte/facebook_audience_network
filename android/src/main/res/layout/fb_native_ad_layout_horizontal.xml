@@ -9,7 +9,7 @@
     android:background="@android:color/black">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="match_parent" 
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -60,7 +60,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/native_ad_option"
+                android:id="@+id/ad_choices_container"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="left|bottom"
@@ -79,9 +79,8 @@
             android:layout_marginRight="10dp"
             android:gravity="center_vertical|right">
             <LinearLayout
-                android:id="@+id/native_ad_call_to_action"
                 android:layout_width="100dp"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:background="#000000">
                
@@ -109,7 +108,10 @@
         <com.facebook.ads.MediaView
             android:id="@+id/native_ad_media"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent" 
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            />
     </FrameLayout>
 
     <LinearLayout
@@ -117,6 +119,16 @@
         android:layout_height="wrap_content"
         android:paddingBottom="16dp"
         android:orientation="vertical">
+
+<TextView
+                android:id="@+id/native_ad_social_context"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="12sp" 
+                android:visibility="gone" />
 
         <TextView
             android:id="@+id/native_ad_body"
