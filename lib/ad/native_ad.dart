@@ -53,6 +53,7 @@ class NativeBannerAdSize {
 class NativeAd extends StatefulWidget {
   /// Replace the default one with your placement ID for the release build.
   final String placementId;
+  //final bool? ismainbanner;
 
   /// Native Ad listener.
   final void Function(NativeAdResult, dynamic)? listener;
@@ -111,6 +112,7 @@ class NativeAd extends StatefulWidget {
   NativeAd({
     Key? key,
     this.placementId = "YOUR_PLACEMENT_ID",
+    //this.ismainbanner = false,
     this.listener,
     required this.adType,
     this.bannerAdSize = NativeBannerAdSize.HEIGHT_50,
@@ -167,7 +169,8 @@ class _NativeAdState extends State<NativeAd>
           Positioned.fill(
             top: isAdReady || widget.keepExpandedWhileLoading
                 ? 0
-                : -(widget.height - containerHeight),
+                // : -(widget.height - containerHeight),
+                : -widget.height,
             child: ConstrainedBox(
               constraints: new BoxConstraints(
                 maxHeight: widget.height,
@@ -187,7 +190,8 @@ class _NativeAdState extends State<NativeAd>
         width: width,
         height: widget.adType == NativeAdType.NATIVE_AD ||
                 widget.adType == NativeAdType.NATIVE_AD_HORIZONTAL ||
-                widget.adType == NativeAdType.NATIVE_AD_VERTICAL
+                widget.adType == NativeAdType.NATIVE_AD_VERTICAL ||
+                widget.adType == NativeAdType.NATIVE_BANNER_AD
             ? widget.height
             : widget.bannerAdSize.height!.toDouble(),
         child: AndroidView(
@@ -196,10 +200,14 @@ class _NativeAdState extends State<NativeAd>
           creationParamsCodec: StandardMessageCodec(),
           creationParams: <String, dynamic>{
             "id": widget.placementId,
+            //"ismainbanner": widget.ismainbanner,
             "banner_ad":
                 widget.adType == NativeAdType.NATIVE_BANNER_AD ? true : false,
             // height param is only for Banner Ads. Native Ad's height is
             // governed by container.
+            "ishorizontal": widget.adType == NativeAdType.NATIVE_AD_HORIZONTAL
+                ? true
+                : false,
             "height": widget.bannerAdSize.height,
             "bg_color": widget.backgroundColor == null
                 ? null
@@ -272,7 +280,8 @@ class _NativeAdState extends State<NativeAd>
       return Container(
         width: width,
         height: widget.height,
-        child: Text("Native Ads for this platform is currently not supported"),
+        // child: Text("Native Ads for this platform is currently not supported"),
+        child: Text(""),
       );
     }
   }
@@ -299,10 +308,10 @@ class _NativeAdState extends State<NativeAd>
             });
           }
 
-          /// ISSUE: Changing height on Ad load causes the ad button to not work
-          /*setState(() {
-            containerHeight = widget.height;
-          });*/
+          //  ISSUE: Changing height on Ad load causes the ad button to not work
+          // setState(() {
+          //   containerHeight = widget.height;
+          // });
           break;
         case LOAD_SUCCESS_METHOD:
           if (!mounted) Future<dynamic>.value(true);
